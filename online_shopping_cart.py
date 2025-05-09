@@ -28,23 +28,21 @@ class online_shop:
 
             choice = input("\nEnter your choice: ")
 
+            clear()
+
             match(choice):
                 case '1':
-                    clear()
                     self.display_inventory()
                     buffer()
 
                 case '2':
-                    clear()
                     self.display_shopping_cart()
                     buffer()
 
                 case '3':
-                    clear()
                     self.add_to_cart()
 
                 case '4':
-                    clear()
                     self.remove_product()
 
                 case '5':
@@ -93,8 +91,8 @@ class online_shop:
             clear()
             self.display_shopping_cart()
             
-            chosen_product_id = input('\nInput product index: ')
-            self.shopping_cart.append(self.shop_inventory[chosen_product_id])
+            chosen_product_id = int(input('\nInput product index: '))
+            self.shopping_cart.pop(chosen_product_id - 1)
             self.cart_quantity -= 1
 
             repeat = input("\nDo you want to remove another product again? "
@@ -108,6 +106,8 @@ class online_shop:
             self.total_cost += product['Price'] * product['Quantity']
 
     def display_shopping_cart(self):
+        print('Shopping Cart\n')
+
         self.list_products_in_cart()
 
         self.calculate_total_cost()
@@ -117,8 +117,11 @@ class online_shop:
         print(f'\nTotal Cost: {self.total_cost}')
 
     def list_products_in_cart(self):
+        if not len(self.shopping_cart):
+            print('[no product to show]')
+            return
+        
         product_index = 1
-        print('Shopping Cart\n')
 
         for product in self.shopping_cart:
             print(f'{product_index}.\n')
